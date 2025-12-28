@@ -1,0 +1,86 @@
+# config.yaml
+
+# ============ PROJECT INFO ============
+project:
+  name: "waste-classification-vietnam"
+  version: "1.0.0"
+  author: "Duong"
+  description: "AI-powered waste classification for Vietnam context"
+
+# ============ PATHS ============
+paths:
+  data_root: "data"
+  raw_data: "data/raw"
+  vietnam_data: "data/vietnam/raw"
+  vietnam_augmented: "data/vietnam/augmented"
+  models_dir: "models"
+  outputs_dir: "outputs"
+  logs_dir: "outputs/logs"
+
+# ============ DATA ============
+data:
+  image_size: [224, 224]
+  batch_size: 32
+  classes: 6  # Will be auto-detected
+  train_split: 0.70
+  val_split: 0.15
+  test_split: 0.15
+  
+  # Augmentation settings
+  augmentation:
+    rotation_range: 40
+    width_shift_range: 0.3
+    height_shift_range: 0.3
+    shear_range: 0.2
+    zoom_range: 0.3
+    horizontal_flip: true
+    brightness_range: [0.5, 1.5]
+    augmentation_factor: 5  # For Vietnam dataset
+
+# ============ MODEL ============
+model:
+  # Main model
+  architecture: "efficientnetb0"  # Options: efficientnetb0, mobilenetv2, resnet50
+  input_shape: [224, 224, 3]
+  weights: "imagenet"
+  
+  # Training strategy
+  trainable_base_layers: 20
+  dropout_rate: 0.5
+  dense_units: [512, 256]
+
+# ============ TRAINING ============
+training:
+  # Phase 1: Head training
+  phase1:
+    epochs: 15
+    learning_rate: 0.001
+    optimizer: "adam"
+    
+  # Phase 2: Fine-tuning
+  phase2:
+    epochs: 30
+    learning_rate: 0.00001
+    optimizer: "adam"
+  
+  # Callbacks
+  early_stopping_patience: 10
+  reduce_lr_patience: 5
+  reduce_lr_factor: 0.5
+  
+  # Loss & metrics
+  loss: "categorical_crossentropy"
+  metrics: ["accuracy", "precision", "recall"]
+
+# ============ EVALUATION ============
+evaluation:
+  confidence_threshold: 0.75
+  save_confusion_matrix: true
+  save_classification_report: true
+  save_failure_analysis: true
+
+# ============ DEMO ============
+demo:
+  port: 8501
+  title: "GreenSort - AI Waste Classifier"
+  max_upload_size: 5  # MB

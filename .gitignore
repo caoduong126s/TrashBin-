@@ -1,0 +1,57 @@
+# .gitignore
+
+# ============ PYTHON ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# ============ JUPYTER ============
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# ============ DATA (quá lớn, không nên commit) ============
+data/raw/
+data/vietnam/
+data/processed/
+*.jpg
+*.png
+*.jpeg
+*.csv
+*.h5
+
+# ============ MODELS (quá lớn) ============
+models/checkpoints/
+models/*.h5
+models/*.pb
+*.weights.h5
+
+# ============ OUTPUTS ============
+outputs/logs/
+*.log
+
+# ============ IDE ============
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ============ WANDB (experiment tracking) ============
+wandb/
+
+# ============ CREDENTIALS ============
+.env
+kaggle.json
+*.key
+*.pem
+
+# ============ KEEP STRUCTURE (empty folders) ============
+!data/.gitkeep
+!models/.gitkeep
+!outputs/.gitkeep
