@@ -103,6 +103,22 @@ CONF_THRESHOLD=0.25
 IOU_THRESHOLD=0.45
 ```
 
+### 3. Tải Model Weights (Quan Trọng) ⚠️
+Do file model (`.pt`) quá lớn để lưu trên GitHub, bạn cần tải thủ công hoặc dùng script:
+
+**Cách 1: Dùng script (Nếu tác giả đã cập nhật link)**
+```bash
+python scripts/download_models.py
+```
+
+**Cách 2: Tải thủ công**
+1. Liên hệ tác giả để lấy file `yolov8s_best.pt` (hoặc train lại từ đầu).
+2. Copy file vào thư mục `models/`:
+   ```bash
+   waste-classification-vn/models/yolov8s_best.pt
+   ```
+
+
 ### 3. Chạy Backend Server
 
 ```bash
