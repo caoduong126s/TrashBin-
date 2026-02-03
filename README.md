@@ -1,105 +1,162 @@
-# 🌿 GreenSort - AI Waste Classification for Vietnam
+# GreenSort - Hệ Thống Phân Loại Rác Thải AI
 
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![TensorFlow 2.15](https://img.shields.io/badge/tensorflow-2.15-orange.svg)](https://www.tensorflow.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+**GreenSort** là hệ thống phân loại rác thải thông minh sử dụng AI, được tối ưu hóa cho bối cảnh Việt Nam. Hệ thống kết hợp nhiều công nghệ deep learning tiên tiến để phân loại 9 loại rác thải khác nhau với độ chính xác cao.
 
-AI-powered waste classification system optimized for Vietnamese waste types using Transfer Learning and EfficientNet.
+## Tính Năng Nổi Bật
 
-## 📋 Features
+### Công Nghệ AI Tiên Tiến
+- **YOLOv8s Object Detection**: Phát hiện đa vật thể thời gian thực (mAP@50 đạt **88.25%**)
+- **Real-time Precision Safeguards**: Hệ thống logic bảo vệ (Anti-flicker, Voting, Hysteresis) giúp khung bao và nhãn cực kỳ ổn định, không bị nhấp nháy.
+- **EfficientNet Classification**: Mô hình phân loại chuẩn xác cao (94.8% accuracy) dùng làm baseline so sánh.
+- **Scene Diversity Training**: Sử dụng MixUp, Mosaic và Copy-Paste để mô phỏng rác trong môi trường phức tạp (nền nhiễu, vật thể che khuất).
+- **Object Tracking**: Theo dõi vật thể qua từng frame ảnh để đảm bảo tính nhất quán.
 
-- 🤖 **Deep Learning**: EfficientNetB0 with transfer learning
-- 🇻🇳 **Vietnam-specific**: Fine-tuned on Vietnamese waste data
-- 📊 **High Accuracy**: 88-92% on test set
-- 🌐 **Web Demo**: Real-time classification via Streamlit
-- 📱 **Mobile-ready**: Optimized for deployment
-- 🔍 **Explainable AI**: Grad-CAM visualizations
+### Tối Ưu Cho Việt Nam
+- **9 Loại Rác Thải**: Pin, hữu cơ, hộp giấy, thủy tinh, kim loại, giấy, nhựa, vải, rác thải.
+- **Thông Minh Mapping**: Tự động ánh xạ 9 loại rác vào **3 nhóm thùng rác chuẩn** (Tái chế, Vô cơ, Nguy hại).
+- **Hướng Dẫn Tái Chế**: Cung cấp hàng chục mẹo và hướng dẫn xử lý rác bằng tiếng Việt.
+- **Giao Diện Tiếng Việt**: Thân thiện với người dùng trong nước.
 
-## 🚀 Quick Start
+### Hệ Thống Backend & API (FastAPI)
+- **WebSocket Loop**: Xử lý luồng video camera trực tiếp với độ trễ thấp (~10 FPS).
+- **Asynchronous Processing**: Xử lý nhiều yêu cầu đồng thời nhờ kiến trúc bất đồng bộ của FastAPI.
+- **Database Integration**: Tự động lưu trữ thống kê phân loại và phản hồi người dùng vào cơ sở dữ liệu.
+- **REST API Comprehensive**: Cung cấp đầy đủ tài liệu OpenAPI (Swagger) cho việc tích hợp frontend.
 
-### Installation
+---
+
+## Loại Rác Được Hỗ Trợ & Ánh Xạ Thùng Rác
+
+| Tiếng Anh | Tiếng Việt | Nhóm Thùng Rác | Mô Tả |
+|-----------|------------|----------------|-------|
+| Battery | Pin | **Nguy hại** | Pin điện tử, pin tiểu, acquy |
+| Biological | Hữu cơ | **Vô cơ/Hữu cơ** | Thực phẩm thừa, rau củ quả, xương |
+| Cardboard | Hộp giấy | **Tái chế** | Thùng carton, bao bì giấy cứng |
+| Glass | Thủy tinh | **Tái chế** | Chai lọ, cốc thủy tinh |
+| Metal | Kim loại | **Tái chế** | Lon nhôm, đồ sắt thép |
+| Paper | Giấy | **Tái chế** | Giấy văn phòng, báo cũ, sách vở |
+| Plastic | Nhựa | **Tái chế** | Chai nhựa, túi nilon, đồ nhựa |
+| Textile | Vải | **Vô cơ** | Quần áo cũ, vải vụn |
+| Trash | Rác thải | **Vô cơ** | Rác không tái chế được |
+
+---
+
+## Cấu Trúc Dự Án
+
+```
+waste-classification-vn/
+│
+├── backend/                    # FastAPI Backend Service
+│   ├── app/
+│   │   ├── api/v1/            # API Endpoints (Real-time, Classify, Stats)
+│   │   ├── core/              # Config, Model Loader, Database
+│   │   ├── services/          # Inference & Preprocessing Logic
+│   │   ├── utils/             # Bin Mapping & Recycling Tips
+│   │   └── main.py            # FastAPI Application Entry
+│   ├── requirements.txt       # Backend dependencies
+│   └── .env                   # Cấu hình môi trường (API port, Model path)
+│
+├── models/                   # Trọng số mô hình đã huấn luyện
+│   ├── yolov8s_best.pt      # YOLOv8 (Sản xuất)
+│   └── efficientnet_b0_best_optimized.pth # EfficientNet (Baseline)
+│
+├── notebooks/                # Jupyter Notebooks (EDA & Training logs)
+├── src/                       # Mã nguồn huấn luyện EfficientNet
+├── yolo-scripts/             # Công cụ xử lý Dataset YOLO
+├── data/                     # Dữ liệu ảnh và Cơ sở dữ liệu SQLite
+├── outputs/                  # Kết quả huấn luyện (Logs & Charts)
+├── requirements.txt         # Dependencies tổng cho toàn hệ thống
+└── README.md               # Tài liệu hướng dẫn chính
+```
+
+---
+
+## Hướng Dẫn Cài Đặt & Khởi Chạy
+
+### 1. Cài Đặt Môi Trường
+
+Yêu cầu: **Python 3.9+**.
+
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/waste-classification-vn.git
+git clone https://github.com/caoduong126s/waste-classification-vn.git
 cd waste-classification-vn
 
-# Create virtual environment
+# Tạo và kích hoạt môi trường ảo
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Trên Windows dùng: venv\Scripts\activate
 
-# Install dependencies
+# Cài đặt tất cả thư viện cần thiết
 pip install -r requirements.txt
 ```
 
-### Download Data
+### 2. Cấu Hình Hệ Thống
+
+Tạo file `.env` bên trong thư mục `backend/`:
+
+```env
+MODEL_PATH=../models/yolov8s_best.pt
+MODEL_TYPE=yolo
+DEVICE=cpu  # Hoặc 'cuda' nếu có GPU NVIDIA, 'mps' nếu dùng Mac M1/M2
+API_PORT=8000
+CONF_THRESHOLD=0.25
+IOU_THRESHOLD=0.45
+```
+
+### 3. Chạy Backend Server
+
 ```bash
-# Download international dataset
-python src/download_data.py
+cd backend
+# Chạy ở chế độ phát triển
+uvicorn app.main:app --reload
 
-# Dataset will be saved to data/raw/
+# Hoặc chạy trực tiếp với module
+python -m app.main
 ```
 
-### Training
-```bash
-# Train baseline CNN
-python src/train.py --model baseline
+Hệ thống sẽ khả dụng tại:
+- **API Server**: `http://localhost:8000`
+- **Tài liệu API (Swagger)**: `http://localhost:8000/docs`
 
-# Train EfficientNet (main model)
-python src/train.py --model efficientnet
+---
 
-# Train with custom config
-python src/train.py --config config.yaml
-```
+## API Endpoints Chính
 
-### Evaluation
-```bash
-# Evaluate on test set
-python src/evaluate.py --model models/final/efficientnet_best.h5
+### Health Check
+`GET /api/v1/health`
+- Kiểm tra trạng thái server và trạng thái tải mô hình AI.
 
-# Generate reports
-python src/evaluate.py --model models/final/efficientnet_best.h5 --report
-```
+### Phân Loại Hình Ảnh (REST)
+`POST /api/v1/classify`
+- Gửi một file ảnh lên để nhận kết quả phân loại, ánh xạ thùng rác và mẹo tái chế.
 
-### Demo
-```bash
-# Launch web demo
-streamlit run demo/streamlit_app.py
+### Nhận Diện Thời Gian Thực (WebSocket)
+`WS /api/v1/ws/realtime-detect`
+- Truyền nhận Base64 hình ảnh liên tục để phát hiện vật thể với độ ổn định cao.
 
-# Open browser at http://localhost:8501
-```
+### Thống Kê & Phản Hồi
+`GET /api/v1/statistics` - Xem biểu đồ phân bố rác.
+`POST /api/v1/feedback` - Gửi phản hồi khi AI nhận diện sai.
 
-## 📊 Results
+---
 
-| Model | Accuracy | F1-Score | Params | Size |
-|-------|----------|----------|--------|------|
-| Baseline CNN | 72% | 0.70 | 2.3M | 9 MB |
-| **EfficientNetB0** | **91%** | **0.90** | 5.3M | 29 MB |
-| MobileNetV2 | 87% | 0.86 | 3.5M | 14 MB |
-| ResNet50 | 89% | 0.88 | 25M | 98 MB |
+## Kết Quả Huấn Luyện
 
-## 📁 Project Structure
-```
-waste-classification-vn/
-├── data/              # Datasets
-├── notebooks/         # Jupyter notebooks
-├── src/              # Source code
-├── models/           # Saved models
-├── outputs/          # Results
-├── demo/             # Web demo
-└── docs/             # Documentation
-```
+| Mô hình | Chỉ số chính | Trạng thái |
+|---------|--------------|------------|
+| **YOLOv8s** | **88.25% mAP@50** | Sẵn sàng sản xuất |
+| **EfficientNetB0** | **94.8% Accuracy** | Baseline so sánh |
 
-## 🤝 Contributing
+---
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Tác Giả
 
-## 📝 License
+**Dự án GreenSort**
+- Người thực hiện: **Lê Huỳnh Cao Dương**
+- Email: [caoduong22102004@gmail.com](mailto:caoduong22102004gmail.com)
 
-This project is licensed under the MIT License.
+---
+**Cùng chung tay bảo vệ môi trường với AI!**
 
-## 👏 Acknowledgments
 
-- TrashNet dataset for initial training
-- EfficientNet paper by Tan & Le (2019)
-- Vietnam community for dataset contribution
 

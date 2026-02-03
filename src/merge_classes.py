@@ -59,14 +59,14 @@ def create_directory_structure(base_dir, splits=['train', 'val', 'test']):
     """
     Create directory structure for processed dataset
     """
-    print(f"\n📁 Creating directory structure at: {base_dir}")
+    print(f"\n Creating directory structure at: {base_dir}")
     
     for split in splits:
         for class_name in FINAL_CLASSES:
             class_dir = base_dir / split / class_name
             class_dir.mkdir(parents=True, exist_ok=True)
     
-    print(f"✅ Created {len(splits)} splits × {len(FINAL_CLASSES)} classes")
+    print(f" Created {len(splits)} splits × {len(FINAL_CLASSES)} classes")
     print(f"   Total directories: {len(splits) * len(FINAL_CLASSES)}")
 
 
@@ -74,7 +74,7 @@ def copy_and_merge_images(source_dir, target_dir, merge_mapping):
     """
     Copy images from source to target, merging classes according to mapping
     """
-    print("\n🔄 Copying and merging images...")
+    print("\n Copying and merging images...")
     
     stats = {
         'train': {},
@@ -83,13 +83,13 @@ def copy_and_merge_images(source_dir, target_dir, merge_mapping):
     }
     
     for split in ['train', 'val', 'test']:
-        print(f"\n📂 Processing {split}/ split...")
+        print(f"\n Processing {split}/ split...")
         
         source_split = source_dir / split
         target_split = target_dir / split
         
         if not source_split.exists():
-            print(f"   ⚠️  {split}/ not found, skipping...")
+            print(f"     {split}/ not found, skipping...")
             continue
         
         # Get all original class directories
@@ -135,7 +135,7 @@ def generate_statistics(stats):
     Generate and display statistics about merged dataset
     """
     print("\n" + "="*70)
-    print("📊 MERGED DATASET STATISTICS")
+    print(" MERGED DATASET STATISTICS")
     print("="*70)
     
     # Calculate totals
@@ -178,7 +178,7 @@ def generate_statistics(stats):
     print(f"{'PERCENTAGE':<15s} {train_pct:>7.1f}% {val_pct:>7.1f}% {test_pct:>7.1f}% {100.0:>7.1f}%")
     
     # Class imbalance
-    print(f"\n📈 Class Balance:")
+    print(f"\n Class Balance:")
     max_class = max(class_totals.items(), key=lambda x: x[1])
     min_class = min(class_totals.items(), key=lambda x: x[1])
     imbalance_ratio = max_class[1] / min_class[1]
@@ -218,7 +218,7 @@ def save_merge_info(target_dir, merge_mapping, stats, class_totals):
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(metadata, f, indent=2, ensure_ascii=False)
     
-    print(f"\n💾 Merge information saved to: {output_path}")
+    print(f"\n Merge information saved to: {output_path}")
 
 
 # ============================================================================
@@ -231,7 +231,7 @@ def main():
     """
     # Check source directory exists
     if not SOURCE_DIR.exists():
-        print(f"❌ ERROR: Source directory not found: {SOURCE_DIR}")
+        print(f" ERROR: Source directory not found: {SOURCE_DIR}")
         print(f"   Please make sure data/raw/ exists and contains train/val/test splits")
         return
     
@@ -249,16 +249,16 @@ def main():
     
     # Final summary
     print("\n" + "="*70)
-    print("✅ CLASS MERGING COMPLETED!")
+    print(" CLASS MERGING COMPLETED!")
     print("="*70)
-    print(f"\n📁 Source: {SOURCE_DIR.absolute()}")
-    print(f"📁 Target: {TARGET_DIR.absolute()}")
-    print(f"\n📊 Summary:")
+    print(f"\n Source: {SOURCE_DIR.absolute()}")
+    print(f" Target: {TARGET_DIR.absolute()}")
+    print(f"\n Summary:")
     print(f"   Original classes: {len(set(MERGE_MAPPING.keys()))}")
     print(f"   Final classes: {len(FINAL_CLASSES)}")
     print(f"   Total images: {sum(class_totals.values()):,}")
-    print(f"\n🎯 Classes: {', '.join(FINAL_CLASSES)}")
-    print("\n✅ Ready for Step 3.2: Class Weights Calculation!")
+    print(f"\n Classes: {', '.join(FINAL_CLASSES)}")
+    print("\n Ready for Step 3.2: Class Weights Calculation!")
     print("="*70)
 
 

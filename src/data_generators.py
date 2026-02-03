@@ -200,7 +200,7 @@ def test_generators(train_gen, val_gen, test_gen):
         print(f"    Labels shape: {batch_y.shape}")
         print(f"    Pixel range: [{batch_x.min():.3f}, {batch_x.max():.3f}]")
     except Exception as e:
-        print(f"   ❌ ERROR: {e}")
+        print(f"    ERROR: {e}")
         return False
     
     # Verify class mappings are consistent
@@ -365,7 +365,7 @@ def main():
     )
     """)
     
-    print("\n PHASE 3 COMPLETED! Ready for Phase 4: Model Training! 🚀")
+    print("\n PHASE 3 COMPLETED! Ready for Phase 4: Model Training! ")
     print("="*70)
 
 

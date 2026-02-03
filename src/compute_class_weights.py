@@ -234,7 +234,7 @@ def save_weights(weights, class_counts, output_dir):
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
     
-    print(f"\n💾 Class weights saved to: {output_path}")
+    print(f"\n Class weights saved to: {output_path}")
     
     # Also save a simple version for quick use
     simple_output = {

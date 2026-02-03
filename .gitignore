@@ -1,57 +1,100 @@
-# .gitignore
-
-# ============ PYTHON ============
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
 venv/
 env/
 ENV/
-.venv
+env.bak/
+venv.bak/
 
-# ============ JUPYTER ============
-.ipynb_checkpoints
-*.ipynb_checkpoints/
-
-# ============ DATA (quá lớn, không nên commit) ============
-data/raw/
-data/vietnam/
-data/processed/
-*.jpg
-*.png
-*.jpeg
-*.csv
-*.h5
-
-# ============ MODELS (quá lớn) ============
-models/checkpoints/
-models/*.h5
-models/*.pb
-*.weights.h5
-
-# ============ OUTPUTS ============
-outputs/logs/
-*.log
-
-# ============ IDE ============
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 .DS_Store
 
-# ============ WANDB (experiment tracking) ============
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Model files (YOLO weights - quá lớn cho GitHub)
+*.pt
+*.pth
+*.weights
+*.onnx
+models/*.pt
+models/*.pth
+notebooks/*.pt
+
+# Training outputs
+runs/
+outputs/
 wandb/
 
-# ============ CREDENTIALS ============
-.env
-kaggle.json
-*.key
-*.pem
+# Large datasets (không nên đưa lên GitHub)
+roboflow-exports/
+yolo-dataset/
+yolo-dataset-merged/
+data/raw/
+data/processed/
+real-collection/
 
-# ============ KEEP STRUCTURE (empty folders) ============
-!data/.gitkeep
-!models/.gitkeep
-!outputs/.gitkeep
+# Backend uploads và cache
+backend/uploads/
+backend/data/
+backend/runs/
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp

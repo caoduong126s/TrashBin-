@@ -180,7 +180,7 @@ def determine_augmentation_strategy(class_counts):
     - Medium classes (800-2000): Medium augmentation  
     - Small classes (< 800): Heavy augmentation
     """
-    print("\n📊 Determining augmentation strategy per class...")
+    print("\n Determining augmentation strategy per class...")
     
     strategy_map = {}
     
@@ -213,7 +213,7 @@ def visualize_augmentations(image_path, output_dir):
     """
     Visualize different augmentation strategies on a sample image
     """
-    print(f"\n🎨 Creating augmentation visualizations...")
+    print(f"\n Creating augmentation visualizations...")
     
     # Read image
     image = cv2.imread(str(image_path))
@@ -399,7 +399,7 @@ def main():
     save_augmentation_config(strategy_map, data_dir)
     
     # Create visualization (if sample image exists)
-    print(f"\n🎨 Creating visualization...")
+    print(f"\n Creating visualization...")
     train_dir = data_dir / 'train'
     
     # Find first image for visualization
