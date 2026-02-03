@@ -43,14 +43,14 @@ venv.bak/
 .env.local
 .env.*.local
 
-# Model files (YOLO weights - quá lớn cho GitHub)
-*.pt
+# Model files (YOLO weights - đã kiểm tra < 100MB nên cho phép upload)
+# *.pt
 *.pth
 *.weights
 *.onnx
-models/*.pt
+# models/*.pt
 models/*.pth
-notebooks/*.pt
+# notebooks/*.pt
 
 # Training outputs
 runs/
@@ -98,3 +98,16 @@ htmlcov/
 *.temp
 *.bak
 *.swp
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
